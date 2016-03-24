@@ -1,0 +1,19 @@
+﻿[
+	{
+		"chiave": "NET0000028",
+		"chiaveUi": "HOME"
+	},
+    {
+        "chiave": "NET0000002",
+        "chiaveUi": "DESCRIZIONE"
+    },
+    {
+        "chiave": "NET0000001",
+        "chiaveUi": "NUOVO"
+    },
+    {
+        "chiave": "NET0000999",
+        "chiaveUi": "LOGOUT"
+    }
+
+]
