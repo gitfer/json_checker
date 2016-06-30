@@ -9,7 +9,7 @@ var config = require('./config');
 
 function init(commandName) {
     var filePath = config.json_file_path || 'test/*.json';
-    console.log('Reading path... ' + filePath);
+    console.info('Reading path... ' + filePath);
 
     glob(filePath, null, function(er, files) {
         var bufferedTranslations = [];
@@ -90,8 +90,13 @@ function init(commandName) {
                 console.log('Conflicts', result);
             } else if (commandName === 'ui') {
                 result = uiConflicts();
-                console.log('Same UI key count', _.keys(result).length);
-                console.log('Same UI key', result);
+                var sameKeyCount =  _.keys(result).length;
+                console.log('Same UI key count', sameKeyCount);
+                if(sameKeyCount > 0){
+                	console.error('Found ' + sameKeyCount + ' error');
+                	console.error(result);
+                }
+                process.exit(1);
             } else if (commandName === 'key') {
                 result = keyConflicts();
                 console.log('Same key', result);
@@ -116,9 +121,10 @@ program
     .option('-k, --key', 'Same chiave, different chiaveUi', function() {
         init('key');
     })
-    .option('-j --json_files_path <type>', 'Set relative paths', function(path) {
-    	
+    .option('-j --json_files_path <type>', 'Same as -u but with custom relative paths', function(path) {
     	config.json_file_path = path;	
+    	console.info('Overriding path...new path ', path);
         init('ui');
     })
     .parse(process.argv);
+
