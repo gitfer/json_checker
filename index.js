@@ -6,11 +6,10 @@ var glob = require('glob'),
 var program = require('commander');
 
 var config = require('./config');
-var filePath = config.json_file_path || 'test/*.json';
-
-console.log('Reading path... ' + filePath);
 
 function init(commandName) {
+    var filePath = config.json_file_path || 'test/*.json';
+    console.log('Reading path... ' + filePath);
 
     glob(filePath, null, function(er, files) {
         var bufferedTranslations = [];
@@ -91,6 +90,7 @@ function init(commandName) {
                 console.log('Conflicts', result);
             } else if (commandName === 'ui') {
                 result = uiConflicts();
+                console.log('Same UI key count', _.keys(result).length);
                 console.log('Same UI key', result);
             } else if (commandName === 'key') {
                 result = keyConflicts();
@@ -115,5 +115,10 @@ program
     })
     .option('-k, --key', 'Same chiave, different chiaveUi', function() {
         init('key');
+    })
+    .option('-j --json_files_path <type>', 'Set relative paths', function(path) {
+    	
+    	config.json_file_path = path;	
+        init('ui');
     })
     .parse(process.argv);
