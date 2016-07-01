@@ -95,8 +95,10 @@ function init(commandName) {
                 if(sameKeyCount > 0){
                 	console.error('Found ' + sameKeyCount + ' error');
                 	console.error(result);
+                	process.exit(1);
                 }
-                process.exit(1);
+
+                process.exit(0);
             } else if (commandName === 'key') {
                 result = keyConflicts();
                 console.log('Same key', result);
